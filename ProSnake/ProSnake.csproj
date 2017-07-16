@@ -88,6 +88,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Everaldo-Crystal-Clear-App-ksnake.ico" />
+    <None Include="Resources\snake2.jpg" />
+    <None Include="Resources\snake1.jpg" />
+    <None Include="Resources\snake0.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
