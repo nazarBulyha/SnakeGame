@@ -1,6 +1,6 @@
 ﻿namespace ProSnake
 {
-    partial class mainForm
+    partial class MainForm
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.lblSelectSnake = new System.Windows.Forms.Label();
             this.lblSelectSpeed = new System.Windows.Forms.Label();
             this.btnForward = new System.Windows.Forms.Button();
@@ -81,7 +81,7 @@
             this.btnForward.TabIndex = 7;
             this.btnForward.Text = ">";
             this.btnForward.UseVisualStyleBackColor = false;
-            this.btnForward.Click += new System.EventHandler(this.btnForward_Click);
+            this.btnForward.Click += new System.EventHandler(this.BtnForward_Click);
             // 
             // btnBack
             // 
@@ -94,7 +94,7 @@
             this.btnBack.Text = "<";
             this.btnBack.UseVisualStyleBackColor = false;
             this.btnBack.Visible = false;
-            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            this.btnBack.Click += new System.EventHandler(this.BtnBack_Click);
             // 
             // pbSnakes
             // 
@@ -115,7 +115,7 @@
             this.btnSpeed3.TabIndex = 10;
             this.btnSpeed3.Text = "3";
             this.btnSpeed3.UseVisualStyleBackColor = false;
-            this.btnSpeed3.Click += new System.EventHandler(this.btnSpeed3_Click);
+            this.btnSpeed3.Click += new System.EventHandler(this.BtnSpeed3_Click);
             // 
             // btnSpeed2
             // 
@@ -126,7 +126,7 @@
             this.btnSpeed2.TabIndex = 9;
             this.btnSpeed2.Text = "2";
             this.btnSpeed2.UseVisualStyleBackColor = false;
-            this.btnSpeed2.Click += new System.EventHandler(this.btnSpeed2_Click);
+            this.btnSpeed2.Click += new System.EventHandler(this.BtnSpeed2_Click);
             // 
             // btnSpeed1
             // 
@@ -137,7 +137,7 @@
             this.btnSpeed1.TabIndex = 8;
             this.btnSpeed1.Text = "1";
             this.btnSpeed1.UseVisualStyleBackColor = false;
-            this.btnSpeed1.Click += new System.EventHandler(this.btnSpeed1_Click);
+            this.btnSpeed1.Click += new System.EventHandler(this.BtnSpeed1_Click);
             // 
             // btnStartGame
             // 
@@ -175,12 +175,12 @@
             this.rb3.Name = "rb3";
             this.rb3.Size = new System.Drawing.Size(14, 13);
             this.rb3.TabIndex = 13;
-            this.rb3.TabStop = true;
             this.rb3.UseVisualStyleBackColor = true;
             // 
             // rb2
             // 
             this.rb2.AutoSize = true;
+            this.rb2.Checked = true;
             this.rb2.Location = new System.Drawing.Point(161, 52);
             this.rb2.Name = "rb2";
             this.rb2.Size = new System.Drawing.Size(14, 13);
@@ -195,10 +195,9 @@
             this.rb1.Name = "rb1";
             this.rb1.Size = new System.Drawing.Size(14, 13);
             this.rb1.TabIndex = 11;
-            this.rb1.TabStop = true;
             this.rb1.UseVisualStyleBackColor = true;
             // 
-            // mainForm
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -213,7 +212,7 @@
             this.Controls.Add(this.lblSelectSnake);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "mainForm";
+            this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Proffecional Snake Game";
             this.TopMost = true;
