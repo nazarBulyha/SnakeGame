@@ -83,7 +83,6 @@ namespace ProSnake
                 //Set colour of snake
                 Brush snakeColour;
 
-                //Draw CIRCLE snake
                 for (int i = 0; i < _gameField.SnakeObject.Snake.Count; i++)
                 {
 
@@ -93,24 +92,11 @@ namespace ProSnake
                         snakeColour = Brushes.Yellow;    //Rest of body
 
                     //Draw snake
-                    canvas.FillEllipse(snakeColour,
-                        new Rectangle(_gameField.SnakeObject.Snake[i].X * _gameField.SnakeObject.Width,
-                                      _gameField.SnakeObject.Snake[i].Y * _gameField.SnakeObject.Height,
-                                      _gameField.SnakeObject.Width, _gameField.SnakeObject.Height));
-
-                    ////Draw RECTANGLE snake
-                    //canvas.FillRectangle(snakeColour,
-                    //    new Rectangle(Snake[i].X * Settings.Width,
-                    //                  Snake[i].Y * Settings.Height,
-                    //                  Settings.Width, Settings.Height));
-
+                    IShape IShapeObject = ShapeFactory.GetSnakeShape(_gameField.SnakeShape);
+                    IShapeObject.DrawObjectOnCanvas(ref canvas, _gameField.FoodObject, _gameField.SnakeObject, snakeColour, i);
 
                     //Draw Food
-                    canvas.FillEllipse(Brushes.Red,
-                        new Rectangle(_gameField.FoodObject.X * _gameField.SnakeObject.Width,
-                             _gameField.FoodObject.Y * _gameField.SnakeObject.Height,
-                             _gameField.SnakeObject.Width, _gameField.SnakeObject.Height));
-
+                    IShapeObject.DrawObjectOnCanvas(ref canvas, _gameField.FoodObject, _gameField.SnakeObject, snakeColour, i);
                 }
             }
             else

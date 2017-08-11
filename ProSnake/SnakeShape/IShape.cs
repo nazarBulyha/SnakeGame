@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Drawing;
 
 namespace ProSnake
 {
@@ -7,6 +7,6 @@ namespace ProSnake
         int X { get; set; }
         int Y { get; set; }
 
-        //IShape GetShape(Shape shape);
+        void DrawObjectOnCanvas(ref Graphics canvas, Food FoodObject, MySnake SnakeObject, Brush snakeColour, int i);
     }
 }

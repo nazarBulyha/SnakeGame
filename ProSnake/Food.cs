@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace ProSnake
@@ -23,6 +24,14 @@ namespace ProSnake
             Random random = new Random();
             food.X = random.Next(0, maxXPos);
             food.Y = random.Next(0, maxYPos);   
+        }
+
+        public void DrawObjectOnCanvas(ref Graphics canvas, Food FoodObject, MySnake SnakeObject, Brush snakeColour, int i)
+        {
+            canvas.FillEllipse(Brushes.Red,
+                new Rectangle(FoodObject.X * SnakeObject.Width,
+                              FoodObject.Y * SnakeObject.Height,
+                              SnakeObject.Width, SnakeObject.Height));
         }
     }
 }

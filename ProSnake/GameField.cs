@@ -5,10 +5,11 @@ namespace ProSnake
 {
     public class GameField
     {
-        public Food FoodObject { get; set; }
-        public MySnake SnakeObject { get; set; }
         PictureBox _pbCanvas { get; set; }
         GameForm GameForm { get; set; }
+        public Food FoodObject { get; set; }
+        public MySnake SnakeObject { get; set; }
+        public Shape SnakeShape { get; set; }
         public static int Score { get; set; } = 0;
         public static int Points { get; set; } = 100;
         public bool GameOver { get; set; } = false;
@@ -17,14 +18,15 @@ namespace ProSnake
 
         public GameField(Shape shape, int speed)
         {
+            SnakeShape = shape;
             SnakeObject = new MySnake()
             {
                 Speed = speed,
                 Width = 15,
                 Height = 15,
                 Direction = Direction.Down,
-                SnakeShape = ShapeFactory.GetSnakeShape(shape),
-                Snake = ShapeFactory.GetListSnakeShape(shape).ToList()
+                SnakeShape = ShapeFactory.GetSnakeShape(SnakeShape),
+                Snake = ShapeFactory.GetListSnakeShape(SnakeShape).ToList()
             };
             FoodObject = new Food()
             {
