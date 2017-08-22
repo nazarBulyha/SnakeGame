@@ -51,10 +51,10 @@
   <ItemGroup>
     <Compile Include="Enums\EnumDirection.cs" />
     <Compile Include="Enums\EnumShape.cs" />
-    <Compile Include="Food.cs" />
-    <Compile Include="GameField.cs" />
+    <Compile Include="GameObjects\Food.cs" />
+    <Compile Include="GameObjects\GameField.cs" />
     <Compile Include="Instrumental\Input.cs" />
-    <Compile Include="MySnake.cs" />
+    <Compile Include="GameObjects\MySnake.cs" />
     <Compile Include="Instrumental\ShapeFactory.cs" />
     <Compile Include="SnakeShape\Circle.cs" />
     <Compile Include="SnakeShape\Diamond.cs" />
