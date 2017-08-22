@@ -4,11 +4,12 @@ using System.Windows.Forms;
 
 namespace ProSnake
 {
-    public class Food : IShape
+    public class Food
     {
-        public static int FoodCost { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
+        public IShape FoodShape { get; set; } = new Circle();
+        public static int FoodCost { get; set; } = 100;
+        public int X { get; set; } = 0;
+        public int Y { get; set; } = 0;
 
         public Food()
         {
@@ -16,21 +17,24 @@ namespace ProSnake
             Y = 0;
         }
 
-        public void GenerateFood(PictureBox pbCanvas, IShape food, int snakeWidth, int snakeHeight)
+        public IShape GenerateFood(PictureBox pbCanvas, int snakeWidth, int snakeHeight)
         {
             int maxXPos = pbCanvas.Size.Width / snakeWidth;
             int maxYPos = pbCanvas.Size.Height / snakeHeight;
 
             Random random = new Random();
-            food.X = random.Next(0, maxXPos);
-            food.Y = random.Next(0, maxYPos);   
+            FoodShape.X = random.Next(0, maxXPos);
+            FoodShape.Y = random.Next(0, maxYPos);
+
+            return FoodShape;
         }
 
-        public void DrawObjectOnCanvas(ref Graphics canvas, Food FoodObject, MySnake SnakeObject, Brush snakeColour, int i)
+        public void DrawFoodOnCanvas(ref Graphics canvas, Food FoodObject, MySnake SnakeObject)
         {
+            //TODO: Change for drawing to derived IShape classes(switch Shapes of Snake head, draw diffrent shape)
             canvas.FillEllipse(Brushes.Red,
-                new Rectangle(FoodObject.X * SnakeObject.Width,
-                              FoodObject.Y * SnakeObject.Height,
+                new Rectangle(FoodObject.FoodShape.X * SnakeObject.Width,
+                              FoodObject.FoodShape.Y * SnakeObject.Height,
                               SnakeObject.Width, SnakeObject.Height));
         }
     }

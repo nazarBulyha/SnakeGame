@@ -1,12 +1,19 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace ProSnake
 {
-    public interface IShape
+    public abstract class IShape : ICloneable
     {
-        int X { get; set; }
-        int Y { get; set; }
+        public virtual int X { get; set; }
+        public virtual int Y { get; set; }
 
-        void DrawObjectOnCanvas(ref Graphics canvas, Food FoodObject, MySnake SnakeObject, Brush snakeColour, int i);
+        public virtual void DrawSnakeOnCanvas(ref Graphics canvas, MySnake SnakeObject, Brush snakeColour, int i) { }
+        public virtual void DrawFoodOnCanvas(ref Graphics canvas, IShape FoodShape, int Width, int Height) { }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

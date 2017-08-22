@@ -7,16 +7,23 @@ namespace ProSnake
 {
     public partial class GameForm : Form
     {
-        private GameField _gameField;
+        private GameField _gameField { get; set; }
+        private MainForm _mainForm { get; set; }
+        private MySnake SnakeObject;
+        private Food FoodObject;
 
-        public GameForm(GameField gameField)
+        public GameForm(GameField gameField, MainForm mainForm)
         {
             InitializeComponent();
 
+            _mainForm = mainForm;
             _gameField = gameField;
+            SnakeObject = _gameField.SnakeObject;
+            FoodObject = _gameField.FoodObject;
+
             gameField.GetCanvasFromGameForm(pbCanvas);
 
-            gameTimer.Interval = 1000 / gameField.SnakeSpeed;
+            gameTimer.Interval = 1000 / _gameField.SnakeSpeed;
             gameTimer.Tick += UpdateScreen;
             gameTimer.Start();
 
@@ -25,49 +32,51 @@ namespace ProSnake
 
         public void StartGame()
         {
+            _gameField.GameOver = false;
             lblGameOver.Visible = false;
+            _gameField.Score = 0;
 
             //Create new player object
-            _gameField.SnakeObject.Snake.Clear();
+            SnakeObject.Snake.Clear();
 
-            //Set settings to default
-            //new Settings();
-            IShape head = _gameField.SnakeObject.SnakeShape;
-            head.X = 10;
-            head.Y = 5;
+            IShape shapeSnakeHead = SnakeObject.SnakeShape;
+            shapeSnakeHead.X = 10;
+            shapeSnakeHead.Y = 5;
+            SnakeObject.Snake.Add(shapeSnakeHead);
+            
+            FoodObject.FoodShape = FoodObject.GenerateFood(pbCanvas,
+                SnakeObject.Width, SnakeObject.Height);
 
-            _gameField.SnakeObject.Snake.Add(head);
-
-
-            //lblScore.Text = Settings.Score.ToString();
-            _gameField.FoodObject.GenerateFood(pbCanvas, _gameField.SnakeObject.SnakeShape,
-                _gameField.SnakeObject.Width, _gameField.SnakeObject.Height);
+            lblScore.Text = _gameField.Score.ToString();
 
         }
 
         public void UpdateScreen(object sender, EventArgs e)
         {
-            //Check for Game Over
-            if (_gameField.GameOver)
+            if (!_gameField.GameOver)
             {
-                //Check if Enter is pressed
-                if (Input.KeyPressed(Keys.Enter))
-                {
-                    StartGame();
-                }
+                if (Input.KeyPressed(Keys.Right) && SnakeObject.Direction != Direction.Left)
+                    SnakeObject.Direction = Direction.Right;
+                else if (Input.KeyPressed(Keys.Left) && SnakeObject.Direction != Direction.Right)
+                    SnakeObject.Direction = Direction.Left;
+                else if (Input.KeyPressed(Keys.Up) && SnakeObject.Direction != Direction.Down)
+                    SnakeObject.Direction = Direction.Up;
+                else if (Input.KeyPressed(Keys.Down) && SnakeObject.Direction != Direction.Up)
+                    SnakeObject.Direction = Direction.Down;
+
+                _gameField.MoveSnake();
             }
             else
             {
-                if (Input.KeyPressed(Keys.Right) && _gameField.SnakeObject.Direction != Direction.Left)
-                    _gameField.SnakeObject.Direction = Direction.Right;
-                else if (Input.KeyPressed(Keys.Left) && _gameField.SnakeObject.Direction != Direction.Right)
-                    _gameField.SnakeObject.Direction = Direction.Left;
-                else if (Input.KeyPressed(Keys.Up) && _gameField.SnakeObject.Direction != Direction.Down)
-                    _gameField.SnakeObject.Direction = Direction.Up;
-                else if (Input.KeyPressed(Keys.Down) && _gameField.SnakeObject.Direction != Direction.Up)
-                    _gameField.SnakeObject.Direction = Direction.Down;
+                //TODO: Make lblGameOver bigger to show all text
+                lblGameOver.Text = "Game over !!! \nFinal Score: " +
+                        _gameField.Score + "\nPress Enter For New Game \nPress Esc to choose new Snake";
+                lblGameOver.Visible = true;
 
-                _gameField.MoveSnake();
+                if (Input.KeyPressed(Keys.Enter))
+                    StartGame();
+                if (Input.KeyPressed(Keys.Escape))
+                    SetSpeedToolStripMenuItem_Click(sender, e);
             }
 
             //use method pbCanvas_Paint()
@@ -78,47 +87,48 @@ namespace ProSnake
         {
             Graphics canvas = e.Graphics;
 
-            if (!_gameField.GameOver)
+            //Set colour of snake
+            Brush snakeColour;
+
+            for (int i = 0; i < SnakeObject.Snake.Count; i++)
             {
-                //Set colour of snake
-                Brush snakeColour;
+                if (i == 0)
+                    snakeColour = Brushes.Purple;       //Draw head
+                else
+                    snakeColour = Brushes.Green;        //Rest of body
 
-                for (int i = 0; i < _gameField.SnakeObject.Snake.Count; i++)
-                {
+                //Draw snake
+                SnakeObject.SnakeShape.DrawSnakeOnCanvas(ref canvas, SnakeObject, snakeColour, i);
 
-                    if (i == 0)
-                        snakeColour = Brushes.Purple;     //Draw head
-                    else
-                        snakeColour = Brushes.Yellow;    //Rest of body
-
-                    //Draw snake
-                    IShape IShapeObject = ShapeFactory.GetSnakeShape(_gameField.SnakeShape);
-                    IShapeObject.DrawObjectOnCanvas(ref canvas, _gameField.FoodObject, _gameField.SnakeObject, snakeColour, i);
-
-                    //Draw Food
-                    IShapeObject.DrawObjectOnCanvas(ref canvas, _gameField.FoodObject, _gameField.SnakeObject, snakeColour, i);
-                }
+                //Draw Food
+                FoodObject.FoodShape.DrawFoodOnCanvas(ref canvas, FoodObject.FoodShape, 
+                    SnakeObject.Width, SnakeObject.Height);
             }
-            else
-            {
 
-
-                string gameOver = "Game over !!! \nFinal Score: " + GameField.Score + "\nPress Enter For New Game";
-                lblGameOver.Text = gameOver;
-                lblGameOver.Visible = true;
-            }
-        }  
-
-        public void EndGame()
-        {
-            _gameField.GameOver = true;
+            lblScore.Text = _gameField.Score.ToString();
         }
 
-        private void GameForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void GameForm_KeyDown(object sender, KeyEventArgs e)
         {
-            Hide();
-            MainForm mainForm = new MainForm();
-            mainForm.Show();
+            Input.ChangeState(e.KeyCode, true);
         }
+
+        private void GameForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            Input.ChangeState(e.KeyCode, false);
+        }
+
+        #region ToolStrip Menu
+        private void NewGameToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            StartGame();
+        }
+
+        private void SetSpeedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+            _mainForm.Show();
+        }
+        #endregion
     }
 }

@@ -171,21 +171,21 @@
             // rb3
             // 
             this.rb3.AutoSize = true;
+            this.rb3.Checked = true;
             this.rb3.Location = new System.Drawing.Point(297, 52);
             this.rb3.Name = "rb3";
             this.rb3.Size = new System.Drawing.Size(14, 13);
             this.rb3.TabIndex = 13;
+            this.rb3.TabStop = true;
             this.rb3.UseVisualStyleBackColor = true;
             // 
             // rb2
             // 
             this.rb2.AutoSize = true;
-            this.rb2.Checked = true;
             this.rb2.Location = new System.Drawing.Point(161, 52);
             this.rb2.Name = "rb2";
             this.rb2.Size = new System.Drawing.Size(14, 13);
             this.rb2.TabIndex = 12;
-            this.rb2.TabStop = true;
             this.rb2.UseVisualStyleBackColor = true;
             // 
             // rb1
@@ -210,12 +210,14 @@
             this.Controls.Add(this.pbSnakes);
             this.Controls.Add(this.lblSelectSpeed);
             this.Controls.Add(this.lblSelectSnake);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Proffecional Snake Game";
             this.TopMost = true;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.pbSnakes)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

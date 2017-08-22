@@ -3,7 +3,7 @@
 namespace ProSnake
 {
     class ShapeFactory {
-        public static IShape GetSnakeShape(Shape snakeShape)
+        public static IShape GetObjectShape(Shape snakeShape)
         {
             switch (snakeShape)
             {

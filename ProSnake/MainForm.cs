@@ -7,6 +7,9 @@ namespace ProSnake
 {
     public partial class MainForm : Form
     {
+        GameForm gameForm;
+        GameField gameField;
+
         //Choose which snake to play
         int snakesCount = 0;
         public List<Bitmap> SnakeImages = new List<Bitmap> {
@@ -25,12 +28,13 @@ namespace ProSnake
             var slctdSnake = pbSnakes.BackgroundImage;
             var speed = (rb1.Checked) ? 8 : (rb2.Checked ? 12 : 16);
             var shape = (slctdSnake == SnakeImages[0]) ? Shape.Circle :
-                         (slctdSnake == SnakeImages[1] ? Shape.Square : Shape.Diamond);
+                        (slctdSnake == SnakeImages[1]  ? Shape.Square : Shape.Diamond);
 
-            GameField gameField = new GameField(shape, speed);
-            GameForm gameForm = new GameForm(gameField);
-            gameForm.Show();
+            gameField = new GameField(shape, speed);
+            gameForm = new GameForm(gameField, this);
+
             Hide();
+            gameForm.Show();
         }
 
         #region Gallary of Snakes
@@ -74,5 +78,10 @@ namespace ProSnake
             rb3.Checked = true;
         }
         #endregion
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

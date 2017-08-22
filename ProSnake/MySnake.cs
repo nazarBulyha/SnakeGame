@@ -5,9 +5,9 @@ namespace ProSnake
     public class MySnake
     {
         public int Speed { get; set; } = 10;
-        public int Width { get; set; } = 5;
-        public int Height { get; set; } = 5;
-        public Direction Direction { get; set; } = Direction.Down;
+        public int Width { get; set; } = 16;
+        public int Height { get; set; } = 16;
+        public Direction Direction { get; set; } = Direction.Up;
         public IShape SnakeShape { get; set; } = new Circle();
         public List<IShape> Snake { get; set; }
 
